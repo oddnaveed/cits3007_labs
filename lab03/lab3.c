@@ -54,11 +54,13 @@ char *make_pathname(const char *dir, const char *fname, const char *ext)
     size_t dirlen = strlen(dir);
     size_t filelen = strlen(fname);
     size_t extlen = strlen(ext);
+
     if (would_wrap_around(dirlen, filelen, extlen))
     {
         printf("error: overflow occurs\n");
         return NULL;
     }
+
     size_t total_length = dirlen + 1 + filelen + 1 + extlen;
     long unsigned int total_memory = sizeof(char) * total_length;
 
