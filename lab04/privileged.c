@@ -28,8 +28,8 @@ int main()
     }
 
     printf("-----after open file-----");
-    uid_t spot1_ruid = getuid();
-    uid_t spot1_euid = geteuid();
+    spot1_ruid = getuid();
+    spot1_euid = geteuid();
     printf("at spot1: ruid is: %d\n", spot1_ruid);
     printf("at spot1: euid is: %d\n", spot1_euid);
 
@@ -37,8 +37,8 @@ int main()
     sleep(1);
 
     printf("-----after sleep-----");
-    uid_t spot1_ruid = getuid();
-    uid_t spot1_euid = geteuid();
+    spot1_ruid = getuid();
+    spot1_euid = geteuid();
     printf("at spot1: ruid is: %d\n", spot1_ruid);
     printf("at spot1: euid is: %d\n", spot1_euid);
 
@@ -47,18 +47,26 @@ int main()
     setuid(getuid()); // getuid() returns the real uid
 
     printf("-----after setuid-----");
-    uid_t spot1_ruid = getuid();
-    uid_t spot1_euid = geteuid();
+    spot1_ruid = getuid();
+    spot1_euid = geteuid();
     printf("at spot1: ruid is: %d\n", spot1_ruid);
     printf("at spot1: euid is: %d\n", spot1_euid);
 
+    // close(fd);
+    // printf("file closed\n");
+
     if (fork())
     { // In the parent process
+        printf("-----in the parent process-----");
+        spot1_ruid = getuid();
+        spot1_euid = geteuid();
+        printf("at spot1: ruid is: %d\n", spot1_ruid);
+        printf("at spot1: euid is: %d\n", spot1_euid);
         close(fd);
         exit(0);
-        printf("-----in the parent process-----");
-        uid_t spot1_ruid = getuid();
-        uid_t spot1_euid = geteuid();
+        printf("-----in the parent process, after closing file descriptor-----");
+        spot1_ruid = getuid();
+        spot1_euid = geteuid();
         printf("at spot1: ruid is: %d\n", spot1_ruid);
         printf("at spot1: euid is: %d\n", spot1_euid);
     }
@@ -70,11 +78,16 @@ int main()
         // attackers have injected the following statements
         // into this process
         printf("-----in the child process-----");
-        uid_t spot1_ruid = getuid();
-        uid_t spot1_euid = geteuid();
+        spot1_ruid = getuid();
+        spot1_euid = geteuid();
         printf("at spot1: ruid is: %d\n", spot1_ruid);
         printf("at spot1: euid is: %d\n", spot1_euid);
         write(fd, "Malicious Data\n", 15);
-        close(fd);
+        // close(fd);
+        printf("-----in the parent process, after closing file descriptor-----");
+        spot1_ruid = getuid();
+        spot1_euid = geteuid();
+        printf("at spot1: ruid is: %d\n", spot1_ruid);
+        printf("at spot1: euid is: %d\n", spot1_euid);
     }
 }
