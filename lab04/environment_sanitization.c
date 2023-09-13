@@ -4,18 +4,23 @@
 #include <ctype.h>
 #include <string.h>
 
-// extern char **environ;
+extern char **environ;
 
-void print_env(int argc, char *argv[], char *envp[])
+void print_env()
 {
-    for (int i=0; envp[i]!=NULL; i++)
+    char **env = environ;
+    while (*env)
     {
-        printf("%s\n", envp[i]);
+        printf("%s\n", *env);
+        env++;
     }
+
+    // printf("size of char* is: %ld", sizeof(char));
 }
 
-int main(int argc, char *argv[], char *envp[])
+int main()
 {
-    print_env(argc, argv, envp);
+
+    print_env();
     return 0;
 }
