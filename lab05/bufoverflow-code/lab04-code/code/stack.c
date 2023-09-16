@@ -9,9 +9,15 @@
 
 void dummy_function(char *str);
 
+/**
+ * buffer overflow
+*/
 int bof(char *str)
 {
     char buffer[BUF_SIZE];
+
+    printf("&buffer: %p\n", &buffer);
+    printf("&str: %p\n", &str);
 
     // The following statement has a buffer overflow problem 
     strcpy(buffer, str);       

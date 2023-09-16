@@ -26,6 +26,8 @@ int main(int argc, char **argv)
    strcpy(code, shellcode);
    int (*func)() = (int(*)())code; // cast code to pointer to function returning int
 
+    //`int (*func)()`: a pointer to a function called func which has no parameters and returns an int
+
    func(); // a pointer to a function. The address we're pointing at is in fact the buffer "code"
    return 1;
 }
