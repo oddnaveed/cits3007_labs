@@ -8,6 +8,8 @@
 int main(int argc, char **argv)
 {
     uid_t euid = geteuid();
+    
 
-    printf("DOING SOMETHING MALICIOUS, with effective user ID %d\n", euid);
+    printf("FIXING, currrent effective user ID is %d\n", euid);
+    // printf("DOING SOMETHING MALICIOUS, with effective user ID %d\n", euid);
 }
